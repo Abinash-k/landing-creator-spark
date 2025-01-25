@@ -10,6 +10,11 @@ import Auth from "./pages/Auth";
 import Products from "./pages/Products";
 import AdminProducts from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
+import AboutUs from "./pages/AboutUs";
+import Buddhas from "./pages/Buddhas";
+import HinduTemples from "./pages/HinduTemples";
+import Households from "./pages/Households";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +29,11 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/buddhas" element={<Buddhas />} />
+            <Route path="/hindu-gods" element={<HinduTemples />} />
+            <Route path="/households" element={<Households />} />
+            <Route path="/contact" element={<Contact />} />
             <Route
               path="/admin/products"
               element={
