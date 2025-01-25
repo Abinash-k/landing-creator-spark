@@ -7,7 +7,8 @@ import { AuthProvider } from "./components/AuthProvider";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
-import Products from "./pages/admin/Products";
+import Products from "./pages/Products";
+import AdminProducts from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
 
 const queryClient = new QueryClient();
@@ -22,11 +23,12 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/products" element={<Products />} />
             <Route
               path="/admin/products"
               element={
                 <ProtectedRoute>
-                  <Products />
+                  <AdminProducts />
                 </ProtectedRoute>
               }
             />

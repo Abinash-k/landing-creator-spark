@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -11,9 +12,11 @@ export const Hero = () => {
           <p className="text-lg text-gray-600 max-w-xl">
             Explore The Stone Studio's exquisite Garden statues, the divine beauty of Hindu God statues, and a serene sanctuary of mesmerising Buddha Statues.
           </p>
-          <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
-            SHOP NOW →
-          </Button>
+          <Link to="/products">
+            <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
+              SHOP NOW →
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
