@@ -10,6 +10,11 @@ import Auth from "./pages/Auth";
 import Products from "./pages/Products";
 import AdminProducts from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
+import Dashboard from "./pages/admin/Dashboard";
+import Sales from "./pages/admin/Sales";
+import Inventory from "./pages/admin/Inventory";
+import CustomOrders from "./pages/admin/CustomOrders";
+import Settings from "./pages/admin/Settings";
 import AboutUs from "./pages/AboutUs";
 import Buddhas from "./pages/Buddhas";
 import HinduTemples from "./pages/HinduTemples";
@@ -35,6 +40,14 @@ const App = () => (
             <Route path="/households" element={<Households />} />
             <Route path="/contact" element={<Contact />} />
             <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/products"
               element={
                 <ProtectedRoute>
@@ -47,6 +60,38 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Orders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/sales"
+              element={
+                <ProtectedRoute>
+                  <Sales />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/inventory"
+              element={
+                <ProtectedRoute>
+                  <Inventory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/custom-orders"
+              element={
+                <ProtectedRoute>
+                  <CustomOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
                 </ProtectedRoute>
               }
             />

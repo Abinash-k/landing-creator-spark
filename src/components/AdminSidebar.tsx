@@ -1,4 +1,4 @@
-import { Package2, ShoppingCart } from "lucide-react";
+import { LayoutDashboard, Package2, ShoppingCart, DollarSign, Box, Settings, FileEdit } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Sidebar,
@@ -13,6 +13,11 @@ import {
 
 const menuItems = [
   {
+    title: "Dashboard",
+    icon: LayoutDashboard,
+    path: "/admin/dashboard",
+  },
+  {
     title: "Products",
     icon: Package2,
     path: "/admin/products",
@@ -21,6 +26,26 @@ const menuItems = [
     title: "Orders",
     icon: ShoppingCart,
     path: "/admin/orders",
+  },
+  {
+    title: "Sales",
+    icon: DollarSign,
+    path: "/admin/sales",
+  },
+  {
+    title: "Inventory",
+    icon: Box,
+    path: "/admin/inventory",
+  },
+  {
+    title: "Custom Orders",
+    icon: FileEdit,
+    path: "/admin/custom-orders",
+  },
+  {
+    title: "Settings",
+    icon: Settings,
+    path: "/admin/settings",
   },
 ];
 
