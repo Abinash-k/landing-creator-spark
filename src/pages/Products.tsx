@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { formatPrice } from "@/lib/utils";
 
 const Products = () => {
   const { data: products, isLoading } = useQuery({
@@ -54,7 +55,7 @@ const Products = () => {
                 </p>
               </CardContent>
               <CardFooter className="p-4 flex justify-between items-center">
-                <span className="text-lg font-bold">${product.price}</span>
+                <span className="text-lg font-bold">{formatPrice(product.price)}</span>
                 <Button>Add to Cart</Button>
               </CardFooter>
             </Card>

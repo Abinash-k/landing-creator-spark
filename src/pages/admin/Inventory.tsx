@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { supabase } from "@/integrations/supabase/client";
+import { formatPrice } from "@/lib/utils";
 
 export default function Inventory() {
   const { data: inventory } = useQuery({
@@ -43,7 +44,7 @@ export default function Inventory() {
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.stock_quantity}</TableCell>
-                  <TableCell>${item.price}</TableCell>
+                  <TableCell>{formatPrice(item.price)}</TableCell>
                   <TableCell>
                     {item.stock_quantity > 0 ? "In Stock" : "Out of Stock"}
                   </TableCell>
