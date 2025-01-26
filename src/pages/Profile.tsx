@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,13 +27,27 @@ const Profile = () => {
   const { data: profile, refetch } = useQuery({
     queryKey: ["profile", user?.id],
     queryFn: async () => {
+      // First try to get the profile
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user?.id)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
+
+      // If no profile exists, create one
+      if (!data) {
+        const { data: newProfile, error: createError } = await supabase
+          .from("profiles")
+          .insert([{ id: user?.id, email: user?.email }])
+          .select()
+          .maybeSingle();
+
+        if (createError) throw createError;
+        return newProfile;
+      }
+
       setFormData({
         full_name: data.full_name || "",
         phone_number: data.phone_number || "",
