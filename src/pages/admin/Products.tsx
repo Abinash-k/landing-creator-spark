@@ -12,9 +12,23 @@ import {
 } from "@/components/ui/table";
 import { AdminLayout } from "@/components/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { ProductForm } from "@/components/ProductForm";
 import { useToast } from "@/components/ui/use-toast";
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(price);
+};
 
 export default function Products() {
   const [editingProduct, setEditingProduct] = useState<any>(null);
@@ -56,7 +70,7 @@ export default function Products() {
           <Sheet>
             <SheetTrigger asChild>
               <Button>
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4 mr-2" />
                 Add Product
               </Button>
             </SheetTrigger>
@@ -73,6 +87,7 @@ export default function Products() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Price</TableHead>
@@ -83,9 +98,18 @@ export default function Products() {
             <TableBody>
               {products?.map((product) => (
                 <TableRow key={product.id}>
+                  <TableCell>
+                    {product.image_url && (
+                      <img
+                        src={product.image_url}
+                        alt={product.name}
+                        className="w-12 h-12 object-cover rounded-md"
+                      />
+                    )}
+                  </TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.categories?.name}</TableCell>
-                  <TableCell>${product.price}</TableCell>
+                  <TableCell>{formatPrice(product.price)}</TableCell>
                   <TableCell>{product.stock_quantity}</TableCell>
                   <TableCell className="space-x-2">
                     <Sheet>
