@@ -8,6 +8,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Products from "./pages/Products";
+import Profile from "./pages/Profile";
 import AdminProducts from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
 import Dashboard from "./pages/admin/Dashboard";
@@ -39,6 +40,14 @@ const App = () => (
             <Route path="/hindu-gods" element={<HinduTemples />} />
             <Route path="/households" element={<Households />} />
             <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/admin/dashboard"
               element={
