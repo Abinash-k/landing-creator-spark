@@ -8,7 +8,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">About Us</h3>
             <p className="text-gray-300">
-              The Stone Studio crafts exquisite statues that bring divine beauty and serenity to your spaces.
+              Abinash Sculptures crafts exquisite statues that bring divine beauty and serenity to your spaces.
             </p>
           </div>
           <div>
@@ -23,10 +23,12 @@ export const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact Info</h3>
             <ul className="space-y-2 text-gray-300">
-              <li>123 Statue Street</li>
-              <li>Artisan District</li>
-              <li>+1 234 567 890</li>
-              <li>info@thestonestudio.com</li>
+              <li>#86, Vasanthapuri Estate</li>
+              <li>3rd Main Road</li>
+              <li>Chengalpattu District</li>
+              <li>Tamil Nadu</li>
+              <li>+91 7305971450</li>
+              <li>abinashsculptures@gmail.com</li>
             </ul>
           </div>
           <div>
@@ -39,7 +41,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-300">
-          <p>&copy; 2024 The Stone Studio. All rights reserved.</p>
+          <p>&copy; 2024 Abinash Sculptures. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -41,9 +41,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-secondary">Address</h3>
                     <p className="text-gray-600">
-                      123 Artisan Street<br />
-                      Craft District<br />
-                      Sculpture City, SC 12345
+                      #86, Vasanthapuri Estate<br />
+                      3rd Main Road<br />
+                      Chengalpattu District<br />
+                      Tamil Nadu
                     </p>
                   </div>
                   <div>
@@ -57,8 +58,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-secondary">Contact</h3>
                     <p className="text-gray-600">
-                      Phone: (123) 456-7890<br />
-                      Email: info@thestonestudio.com
+                      Phone: +91 7305971450<br />
+                      Email: abinashsculptures@gmail.com
                     </p>
                   </div>
                 </div>
