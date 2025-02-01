@@ -21,6 +21,7 @@ import Buddhas from "./pages/Buddhas";
 import HinduTemples from "./pages/HinduTemples";
 import Households from "./pages/Households";
 import Contact from "./pages/Contact";
+import Temples from "./pages/Temples";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/hindu-gods" element={<HinduTemples />} />
             <Route path="/households" element={<Households />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/temples" element={<Temples />} />
             <Route
               path="/profile"
               element={
