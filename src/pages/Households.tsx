@@ -1,46 +1,61 @@
+import { useQuery } from "@tanstack/react-query";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/utils";
 
 const Households = () => {
-  const items = [
-    {
-      id: 1,
-      name: "Decorative Wall Panel",
-      description: "Intricately carved wall panel perfect for modern homes.",
-      price: 15000,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["household-products"],
+    queryFn: async () => {
+      const { data: categoryData } = await supabase
+        .from("categories")
+        .select("id")
+        .eq("name", "Households")
+        .single();
+
+      if (!categoryData) return [];
+
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category_id", categoryData.id);
+
+      if (error) throw error;
+      return data;
     },
-    {
-      id: 2,
-      name: "Stone Fountain",
-      description: "Beautiful handcrafted fountain for gardens and courtyards.",
-      price: 25000,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
-    },
-    {
-      id: 3,
-      name: "Decorative Pillar",
-      description: "Elegant stone pillar with traditional Indian motifs.",
-      price: 35000,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
-    }
-  ];
+  });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navigation />
+        <main className="flex-grow pt-20">
+          <div className="container mx-auto px-4 py-16">
+            <p>Loading products...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-grow pt-20">
         <div className="container mx-auto px-4 py-16">
-          <h1 className="text-4xl font-bold text-secondary mb-8">Household Sculptures</h1>
+          <h1 className="text-4xl font-bold text-secondary mb-8">
+            Household Sculptures
+          </h1>
           <div className="grid md:grid-cols-3 gap-8">
-            {items.map((item) => (
+            {products?.map((item) => (
               <Card key={item.id} className="overflow-hidden">
                 <div className="aspect-w-3 aspect-h-2">
                   <img
-                    src={item.image}
+                    src={item.image_url || "/placeholder.svg"}
                     alt={item.name}
                     className="object-cover w-full h-full"
                   />
@@ -49,9 +64,7 @@ const Households = () => {
                   <h3 className="text-xl font-semibold text-secondary mb-2">
                     {item.name}
                   </h3>
-                  <p className="text-gray-600 mb-4">
-                    {item.description}
-                  </p>
+                  <p className="text-gray-600 mb-4">{item.description}</p>
                 </CardContent>
                 <CardFooter className="p-6 border-t">
                   <div className="flex justify-between items-center w-full">

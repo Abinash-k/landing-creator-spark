@@ -10,10 +10,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ImagePlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductFormProps {
   product?: any;
@@ -22,10 +30,20 @@ interface ProductFormProps {
 
 export function ProductForm({ product, onSuccess }: ProductFormProps) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState<string | null>(
     product?.image_url || null
   );
   const [uploading, setUploading] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await supabase.from("categories").select("*");
+      if (data) setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
   const form = useForm({
     defaultValues: {
@@ -34,6 +52,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       price: product?.price || "",
       stock_quantity: product?.stock_quantity || "",
       image_url: product?.image_url || "",
+      category_id: product?.category_id || "",
     },
   });
 
@@ -78,7 +97,6 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
   };
 
   const formatPrice = (value: string) => {
-    // Remove non-numeric characters
     const numericValue = value.replace(/[^0-9.]/g, "");
     return numericValue;
   };
@@ -106,6 +124,27 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       onSuccess();
       form.reset();
       setImagePreview(null);
+
+      // Navigate based on category
+      const category = categories.find((c) => c.id === values.category_id);
+      if (category) {
+        switch (category.name) {
+          case "Buddhas":
+            navigate("/buddhas");
+            break;
+          case "Hindu Gods":
+            navigate("/hindu-gods");
+            break;
+          case "Households":
+            navigate("/households");
+            break;
+          case "Temples":
+            navigate("/temples");
+            break;
+          default:
+            navigate("/products");
+        }
+      }
     } catch (error) {
       toast({
         variant: "destructive",
@@ -152,6 +191,31 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
 
         <FormField
           control={form.control}
+          name="category_id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
@@ -163,6 +227,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="description"
@@ -176,6 +241,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="price"
@@ -194,6 +260,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="stock_quantity"
@@ -207,6 +274,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="image_url"
@@ -218,6 +286,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             </FormItem>
           )}
         />
+
         <Button type="submit" className="w-full">
           {product ? "Update" : "Create"} Product
         </Button>
