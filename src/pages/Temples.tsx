@@ -3,11 +3,15 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/utils";
 import { redirectToWhatsApp } from "@/lib/whatsapp";
+import { useState } from "react";
 
 const Temples = () => {
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
   const { data: products, isLoading } = useQuery({
     queryKey: ["temple-products"],
     queryFn: async () => {
@@ -52,11 +56,14 @@ const Temples = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {products?.map((item) => (
               <Card key={item.id} className="overflow-hidden">
-                <div className="aspect-w-3 aspect-h-2">
+                <div 
+                  className="aspect-w-3 aspect-h-2 cursor-pointer"
+                  onClick={() => setSelectedProduct(item)}
+                >
                   <img
                     src={item.image_url || "/placeholder.svg"}
                     alt={item.name}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full hover:opacity-90 transition-opacity"
                   />
                 </div>
                 <CardContent className="p-6">
@@ -81,6 +88,41 @@ const Temples = () => {
               </Card>
             ))}
           </div>
+
+          <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+            <DialogContent className="max-w-3xl">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold text-secondary">
+                  {selectedProduct?.name}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="aspect-w-3 aspect-h-2">
+                  <img
+                    src={selectedProduct?.image_url || "/placeholder.svg"}
+                    alt={selectedProduct?.name}
+                    className="object-cover w-full h-full rounded-lg"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <p className="text-gray-600">{selectedProduct?.description}</p>
+                  <div className="text-2xl font-bold text-primary">
+                    {selectedProduct && formatPrice(selectedProduct.price)}
+                  </div>
+                  <Button 
+                    onClick={() => {
+                      if (selectedProduct) {
+                        redirectToWhatsApp(selectedProduct.name, selectedProduct.price);
+                      }
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
+                    Buy on WhatsApp
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </main>
       <Footer />
