@@ -1,15 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const categories = [
-  { name: "Antique Statues", count: 82, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
-  { name: "Buddha Statues", count: 243, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
-  { name: "Ganesh Statues", count: 199, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
-  { name: "Garden Statues", count: 850, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
-  { name: "Hindu Statues", count: 650, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
-  { name: "Modern Statue", count: 175, image: "/lovable-uploads/d84a8f47-0439-4f82-8651-acdb2fc024b2.png" },
+  {
+    name: "Hindu Gods",
+    count: 650,
+    image: "/lovable-uploads/0c09b932-2b93-4dad-8853-c96065773bde.png",
+    route: "/hindu-gods"
+  },
+  {
+    name: "Buddha Statues",
+    count: 243,
+    image: "/lovable-uploads/99f0a343-076a-4788-b40b-ae1b695b6fa2.png",
+    route: "/buddhas"
+  },
+  {
+    name: "Household Items",
+    count: 175,
+    image: "/lovable-uploads/e083d520-76dd-4f16-a68a-cd8584456333.png",
+    route: "/households"
+  }
 ];
 
 export const Categories = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white py-20">
       <div className="container mx-auto px-4">
@@ -21,8 +36,9 @@ export const Categories = () => {
           {categories.map((category, index) => (
             <div
               key={category.name}
-              className="group relative overflow-hidden rounded-lg shadow-lg transition-transform hover:-translate-y-1"
+              className="group relative overflow-hidden rounded-lg shadow-lg transition-transform hover:-translate-y-1 cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => navigate(category.route)}
             >
               <img
                 src={category.image}
@@ -32,7 +48,7 @@ export const Categories = () => {
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <div className="text-center text-white">
                   <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
-                  <p>({category.count})</p>
+                  <p>({category.count} items)</p>
                 </div>
               </div>
             </div>
