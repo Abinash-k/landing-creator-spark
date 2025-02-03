@@ -15,7 +15,7 @@ export const FoundersNote = () => {
               "Thank you for being part of our story. We look forward to helping you find the perfect piece that will transform your space into a sanctuary of peace and beauty."
             </p>
             <div className="mt-8">
-              <p className="font-semibold text-secondary">Rajesh Kumar</p>
+              <p className="font-semibold text-secondary">Abinash Karunanidhi</p>
               <p className="text-sm text-gray-500">Founder, Abinash Sculptures</p>
             </div>
           </div>
