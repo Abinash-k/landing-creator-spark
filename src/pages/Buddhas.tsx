@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/utils";
+import { redirectToWhatsApp } from "@/lib/whatsapp";
 
 const Buddhas = () => {
   const { data: products, isLoading } = useQuery({
@@ -69,7 +70,12 @@ const Buddhas = () => {
                     <span className="text-xl font-bold text-primary">
                       {formatPrice(item.price)}
                     </span>
-                    <Button>Add to Cart</Button>
+                    <Button 
+                      onClick={() => redirectToWhatsApp(item.name, item.price)}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      Buy on WhatsApp
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>

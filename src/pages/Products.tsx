@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/utils";
+import { redirectToWhatsApp } from "@/lib/whatsapp";
 
 const Products = () => {
   const { data: products, isLoading } = useQuery({
@@ -56,7 +57,12 @@ const Products = () => {
               </CardContent>
               <CardFooter className="p-4 flex justify-between items-center">
                 <span className="text-lg font-bold">{formatPrice(product.price)}</span>
-                <Button>Add to Cart</Button>
+                <Button 
+                  onClick={() => redirectToWhatsApp(product.name, product.price)}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  Buy on WhatsApp
+                </Button>
               </CardFooter>
             </Card>
           ))}
